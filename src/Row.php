@@ -49,4 +49,20 @@ class Row extends GporBase
     {
         return implode(' ', $this->cssClasses);
     }
+
+    public function setCols($columns, $startIso, $endIso, $firstCol, $lastCol)
+    {
+        if (isset($columns[$startIso])) {
+            $this->startColumn = $columns[$startIso];
+        } else {
+            $this->startColumn = $firstCol;
+            $this->cssClasses[] = 'truncated-left';
+        }
+        if (isset($columns[$endIso])) {
+            $this->endColumn = $columns[$endIso];
+        } else {
+            $this->endColumn = $lastCol;
+            $this->cssClasses[] = 'truncated-right';
+        }
+    }
 }

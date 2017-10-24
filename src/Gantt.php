@@ -12,6 +12,16 @@ class Gantt extends GporBase
     public $columns = [];
 
     /**
+     * @var \Gpor\Gantt\Column
+     */
+    public $firstCol;
+
+    /**
+     * @var \Gpor\Gantt\Column
+     */
+    public $lastCol;
+
+    /**
      * @var \Gpor\Gantt\ColumnGroup[]
      */
     public $columnGroups = [];
@@ -40,6 +50,8 @@ class Gantt extends GporBase
         $n = count($this->columns);
         $i = 0;
         foreach ($this->columns as $col) {
+            if ($this->firstCol === null) $this->firstCol = $col;
+            $this->lastCol = $col;
             $col->setLeftPos($i, $n);
             $i++;
         }

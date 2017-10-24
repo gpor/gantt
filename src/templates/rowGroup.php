@@ -13,8 +13,8 @@
     </div>
     <?= $this->bar ?>
 </div>
-<div class="gg-group-columns" id="gg-group-columns-<?= $this->i ?>">
-    <div class="gg-group-columns-inner">
+<div class="gg-group-rows" id="gg-group-rows-<?= $this->i ?>">
+    <div class="gg-group-rows-inner">
         <?php foreach($this->rowSubGroups as $subGroup): ?>
             <?= $subGroup ?>
         <?php endforeach ?>

@@ -8,7 +8,13 @@ class Bar extends GporBase
     public $text;
     public $gantt;
     public $row_or_group;
-    public $cssClass = ''; # gg-thinner
+    public $cssClass = '';
+
+    /**
+     * if this is FALSE, the only property required is $gantt (to do grid lines)
+     * @var bool
+     */
+    public $showBar = true;
 
     public function defaultTemplate()
     {
@@ -19,13 +25,12 @@ class Bar extends GporBase
     {
         return $this->row_or_group->startColumn->barDimensions($this->row_or_group->endColumn);
     }
-
-    public function text()
-    {
-        return DateFill::dateRange(
-            $this->row_or_group->startColumn->timestamp,
-            $this->row_or_group->endColumn->timestamp
-        );
-//        return date('j M', $this->row_or_group->startColumn->timestamp) . ' - ' . date('j M', $this->row_or_group->endColumn->timestamp);
-    }
+//
+//    public function text()
+//    {
+//        return DateFill::dateRange(
+//            $this->row_or_group->startColumn->timestamp,
+//            $this->row_or_group->endColumn->timestamp
+//        );
+//    }
 }

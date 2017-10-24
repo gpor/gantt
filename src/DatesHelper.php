@@ -3,7 +3,7 @@
 namespace Gpor\Gantt;
 
 
-class DateFill
+class DatesHelper
 {
     public $startDate;
     public $numOfDays;
@@ -69,18 +69,18 @@ class DateFill
             $dayIntWeekStart    = $dayIntStart + ($group * $numDaysInGroup);
             $dayIntWeekLastDay  = $dayIntWeekStart + $numDaysInGroup - 1;
             $groups[] = [
-                'label'     => self::dateRange($dayIntWeekStart * self::SECONDS_IN_DAY, $dayIntWeekLastDay * self::SECONDS_IN_DAY),
+                'label'     => self::rangeLabel($dayIntWeekStart * self::SECONDS_IN_DAY, $dayIntWeekLastDay * self::SECONDS_IN_DAY),
                 'days'      => self::groupFill($dayIntWeekStart, $numDaysInGroup),
             ];
         }
         return $groups;
     }
 
-    public static function dateRange($firstDateUnix, $lastDayUnix)
+    public static function rangeLabel($firstDateUnix, $lastDayUnix)
     {
-        $firstDayDay           = date('d', $firstDateUnix);
+        $firstDayDay           = date('j', $firstDateUnix);
         $firstDayMonth         = date('M', $firstDateUnix);
-        $lastDayDay            = date('d', $lastDayUnix);
+        $lastDayDay            = date('j', $lastDayUnix);
         $lastDayMonth          = date('M', $lastDayUnix);
         if ($firstDayMonth === $lastDayMonth) {
             return "$firstDayDay - $lastDayDay $lastDayMonth";

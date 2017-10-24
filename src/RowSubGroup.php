@@ -28,6 +28,11 @@ class RowSubGroup extends GporBase
      */
     public $endColumn;
 
+    /**
+     * @var \Gpor\Gantt\Bar
+     */
+    public $bar;
+
     public function defaultTemplate()
     {
         return 'rowSubGroup';

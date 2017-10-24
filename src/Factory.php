@@ -22,7 +22,7 @@ class Factory
         return $gantt;
     }
 
-    public static function newColumnGroup($data, $gantt)
+    public static function newColumnGroup($data, Gantt $gantt)
     {
         $colGroup               = new ColumnGroup;
         $colGroup->label        = $data['label'];
@@ -34,7 +34,7 @@ class Factory
         return $colGroup;
     }
 
-    private static function newRowGroup($data, \Gpor\Gantt\Gantt $gantt)
+    private static function newRowGroup($data, Gantt $gantt)
     {
         $rowGroup = new RowGroup;
         $rowGroup->gantt    = $gantt;
@@ -50,7 +50,12 @@ class Factory
         return $rowGroup;
     }
 
-    private static function newBar($row_or_group, $gantt)
+    /**
+     * @param \Gpor\Gantt\RowGroup|\Gpor\Gantt\Row|NULL $row_or_group
+     * @param \Gpor\Gantt\Gantt $gantt
+     * @return Bar
+     */
+    private static function newBar($row_or_group, Gantt $gantt)
     {
         $bar = new Bar;
         $bar->gantt = $gantt;
@@ -58,7 +63,7 @@ class Factory
         return $bar;
     }
 
-    private static function newRowSubGroup($data, \Gpor\Gantt\RowGroup $rowGroup)
+    private static function newRowSubGroup($data, RowGroup $rowGroup)
     {
         $rowSubGroup            = new RowSubGroup;
         $rowSubGroup->rowGroup  = $rowGroup;
@@ -67,24 +72,32 @@ class Factory
             $row = self::newRow($row_data, $rowSubGroup);
             $rowSubGroup->rows[] = $row;
         }
+        $noBar                  = self::newBar(null, $rowGroup->gantt);
+        $noBar->showBar         = false;
+        $rowSubGroup->bar       = $noBar;
         $rowSubGroup->calculateTotals();
         return $rowSubGroup;
     }
 
-    private static function newRow($data, \Gpor\Gantt\RowSubGroup $rowSubGroup)
+    private static function newRow($data, RowSubGroup $rowSubGroup)
     {
+        $gantt = $rowSubGroup->rowGroup->gantt;
         $row = new Row;
         $row->subGroup      = $rowSubGroup;
         $row->rowLabel      = $data['rowLabel'];
         $row->tasks         = $data['tasks'];
         $row->cssClasses    = explode(' ', $data['cssClass']);
-        $startCol           = $rowSubGroup->rowGroup->gantt->columns[$data['start']];
-        $endCol             = $rowSubGroup->rowGroup->gantt->columns[$data['end']];
-        $row->startColumn   = $startCol;
-        $row->endColumn     = $endCol;
-        $row->bar           = self::newBar($row, $rowSubGroup->rowGroup->gantt);
-//        $row->bar->cssClass = 'gg-thinner';
+        $row->setCols($gantt->columns, $data['start'], $data['end'], $gantt->firstCol, $gantt->lastCol);
+        $row->bar           = self::newBar($row, $gantt);
+        $row->bar->text     = DatesHelper::rangeLabel(strtotime($data['start']), strtotime($data['end']));
         return $row;
+    }
+
+    private static function startCol($columns, $isoDate, $defaultCol)
+    {
+        return isset($columns[$isoDate])
+            ? $columns[$isoDate]
+            : $defaultCol;
     }
 
     private static function newColumn($iso)
