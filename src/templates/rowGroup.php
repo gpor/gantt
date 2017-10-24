@@ -1,0 +1,22 @@
+<?php /* @var $this \Gpor\Gantt\RowGroup */ ?>
+<div class="gg-row-outer gg-pink gg-group-head" data-groupindex="<?= $this->i ?>">
+    <div class="gg-row-label">
+        <div class="col-expand-hide-clickable">
+            <span>+</span>
+        </div>
+        <div class="col-graphic">
+            <img src="<?= $this->icon ?>" />
+        </div>
+        <div class="col-text">
+            <h3><?= $this->label ?> <span class="tasks-text">(<?= $this->tasks() ?> Tasks)</span></h3>
+        </div>
+    </div>
+    <?= $this->bar ?>
+</div>
+<div class="gg-group-columns" id="gg-group-columns-<?= $this->i ?>">
+    <div class="gg-group-columns-inner">
+        <?php foreach($this->rowSubGroups as $subGroup): ?>
+            <?= $subGroup ?>
+        <?php endforeach ?>
+    </div>
+</div>
