@@ -61,7 +61,7 @@ class DatesHelper
         return $inst->output();
     }
 
-    public static function byWeeks($startIsoDate, $numDaysInGroup = 7, $numOfGroups = 4)
+    public static function byWeeks($startIsoDate, $numDaysInGroup = 7, $numOfGroups = 8)
     {
         $dayIntStart = self::dayInt($startIsoDate);
         $groups = [];

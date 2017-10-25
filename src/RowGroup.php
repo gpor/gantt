@@ -7,8 +7,12 @@ class RowGroup extends GporBase
 {
     public $icon;
     public $label;
-    public $stages;
     public $barText;
+
+    /**
+     * @var \Gpor\Gantt\RowSubGroup[]
+     */
+    public $rowSubGroups = [];
 
     /**
      * index for this instance within $gantt->columnGroups
@@ -22,6 +26,7 @@ class RowGroup extends GporBase
     public $bar;
 
     /**
+     * UP ref
      * @var \Gpor\Gantt\
      */
     public $gantt;
@@ -48,32 +53,10 @@ class RowGroup extends GporBase
     }
 
     /**
-     * @var \Gpor\Gantt\RowSubGroup[]
-     */
-    public $rowSubGroups = [];
-
-    public function tasks()
-    {
-        $tasks = 0;
-        foreach ($this->rowSubGroups as $rowSubGroup) {
-            $tasks += $rowSubGroup->tasks();
-        }
-        return $tasks;
-    }
-
-    /**
      * called after all rows set
      */
     public function calculateTotals()
     {
-        foreach ($this->rowSubGroups as $rowSubGroups) {
-            $this->tasks += $rowSubGroups->tasks;
-            if ($this->startColumn === null || $rowSubGroups->startColumn->leftPos < $this->startColumn->leftPos) {
-                $this->startColumn = $rowSubGroups->startColumn;
-            }
-            if ($this->endColumn === null || $rowSubGroups->endColumn->leftPosEnd > $this->endColumn->leftPosEnd) {
-                $this->endColumn = $rowSubGroups->endColumn;
-            }
-        }
+        $this->bar->setPointsFromChildBars($this->rowSubGroups);
     }
 }

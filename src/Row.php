@@ -16,53 +16,23 @@ class Row extends GporBase
     public $bar;
 
     /**
+     * UP ref
      * @var \Gpor\Gantt\RowSubGroup
      */
     public $subGroup;
-
-    /**
-     * @var int
-     */
-    public $tasks;
-
-    /**
-     * @var \Gpor\Gantt\Column
-     */
-    public $startColumn;
-
-    /**
-     * @var \Gpor\Gantt\Column
-     */
-    public $endColumn;
 
     public function defaultTemplate()
     {
         return 'row';
     }
-
-    public function style()
-    {
-        return $this->startColumn->barDimensions($this->endColumn);
-    }
+//
+//    public function style()
+//    {
+//        return $this->startColumn->barDimensions($this->endColumn);
+//    }
 
     public function cssClass()
     {
         return implode(' ', $this->cssClasses);
-    }
-
-    public function setCols($columns, $startIso, $endIso, $firstCol, $lastCol)
-    {
-        if (isset($columns[$startIso])) {
-            $this->startColumn = $columns[$startIso];
-        } else {
-            $this->startColumn = $firstCol;
-            $this->cssClasses[] = 'truncated-left';
-        }
-        if (isset($columns[$endIso])) {
-            $this->endColumn = $columns[$endIso];
-        } else {
-            $this->endColumn = $lastCol;
-            $this->cssClasses[] = 'truncated-right';
-        }
     }
 }

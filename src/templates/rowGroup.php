@@ -8,7 +8,7 @@
             <img src="<?= $this->icon ?>" />
         </div>
         <div class="col-text">
-            <h3><?= $this->label ?> <span class="tasks-text">(<?= $this->tasks() ?> Tasks)</span></h3>
+            <h3><?= $this->label ?> <span class="tasks-text">(<?= $this->bar->tasks ?> Tasks)</span></h3>
         </div>
     </div>
     <?= $this->bar ?>

@@ -40,13 +40,12 @@ class Factory
         $rowGroup->gantt    = $gantt;
         $rowGroup->icon     = $data['icon'];
         $rowGroup->label    = $data['label'];
-        $rowGroup->stages   = $data['stages'];
         foreach ($data['subgroups'] as $subgroup_data) {
             $rowSubGroup = self::newRowSubGroup($subgroup_data, $rowGroup);
             $rowGroup->rowSubGroups[] = $rowSubGroup;
         }
+        $rowGroup->bar          = self::newBar($rowGroup, $gantt);
         $rowGroup->calculateTotals();
-        $rowGroup->bar = self::newBar($rowGroup, $gantt);
         return $rowGroup;
     }
 
@@ -59,7 +58,6 @@ class Factory
     {
         $bar = new Bar;
         $bar->gantt = $gantt;
-        $bar->row_or_group = $row_or_group;
         return $bar;
     }
 
@@ -85,19 +83,11 @@ class Factory
         $row = new Row;
         $row->subGroup      = $rowSubGroup;
         $row->rowLabel      = $data['rowLabel'];
-        $row->tasks         = $data['tasks'];
         $row->cssClasses    = explode(' ', $data['cssClass']);
-        $row->setCols($gantt->columns, $data['start'], $data['end'], $gantt->firstCol, $gantt->lastCol);
         $row->bar           = self::newBar($row, $gantt);
-        $row->bar->text     = DatesHelper::rangeLabel(strtotime($data['start']), strtotime($data['end']));
+        $row->bar->tasks    = $data['tasks'];
+        $row->bar->setPointsFromDates($data['start'], $data['end']);
         return $row;
-    }
-
-    private static function startCol($columns, $isoDate, $defaultCol)
-    {
-        return isset($columns[$isoDate])
-            ? $columns[$isoDate]
-            : $defaultCol;
     }
 
     private static function newColumn($iso)

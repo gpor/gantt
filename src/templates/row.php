@@ -6,7 +6,7 @@
             <i class="fa fa-circle-o dept-color-{{ $sign->name }}" aria-hidden="true"></i>
         </div>
         <div class="col-text">
-            <h3><?= $this->rowLabel ?> <span class="tasks-text">(<?= $this->tasks ?> Tasks)</span></h3>
+            <h3><?= $this->rowLabel ?> <span class="tasks-text">(<?= $this->bar->tasks ?> Tasks)</span></h3>
         </div>
     </div>
     <?= $this->bar ?>
