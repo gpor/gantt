@@ -40,6 +40,7 @@ class Factory
         $rowGroup->gantt    = $gantt;
         $rowGroup->icon     = $data['icon'];
         $rowGroup->label    = $data['label'];
+        if (isset($data['labelHref'])) $rowGroup->labelHref = $data['labelHref'];
         foreach ($data['subgroups'] as $subgroup_data) {
             $rowSubGroup = self::newRowSubGroup($subgroup_data, $rowGroup);
             $rowGroup->rowSubGroups[] = $rowSubGroup;
@@ -66,6 +67,7 @@ class Factory
         $rowSubGroup            = new RowSubGroup;
         $rowSubGroup->rowGroup  = $rowGroup;
         $rowSubGroup->label     = $data['label'];
+        if (isset($data['labelHref'])) $rowSubGroup->labelHref = $data['labelHref'];
         foreach ($data['rows'] as $row_data) {
             $row = self::newRow($row_data, $rowSubGroup);
             $rowSubGroup->rows[] = $row;
@@ -83,6 +85,7 @@ class Factory
         $row = new Row;
         $row->subGroup      = $rowSubGroup;
         $row->rowLabel      = $data['rowLabel'];
+        if (isset($data['labelHref'])) $row->labelHref = $data['labelHref'];
         $row->cssClasses    = explode(' ', $data['cssClass']);
         $row->bar           = self::newBar($row, $gantt);
         $row->bar->tasks    = $data['tasks'];

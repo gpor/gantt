@@ -15,6 +15,7 @@ class RowSubGroup extends GporBase
      * @var string
      */
     public $label;
+    public $labelHref;
 
     /**
      * UP ref

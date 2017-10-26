@@ -8,6 +8,7 @@ class RowGroup extends GporBase
     public $icon;
     public $label;
     public $barText;
+    public $labelHref;
 
     /**
      * @var \Gpor\Gantt\RowSubGroup[]

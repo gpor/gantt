@@ -6,7 +6,13 @@
             <i class="fa fa-circle-o dept-color-{{ $sign->name }}" aria-hidden="true"></i>
         </div>
         <div class="col-text">
-            <h3><?= $this->rowLabel ?> <span class="tasks-text">(<?= $this->bar->tasks ?> <?= str_plural('Task', $this->bar->tasks) ?>)</span></h3>
+            <?php if ($this->labelHref): ?>
+            <a href="<?= $this->labelHref ?>">
+            <?php endif ?>
+                <h3><?= $this->rowLabel ?> <span class="tasks-text">(<?= $this->bar->tasks ?> <?= str_plural('Task', $this->bar->tasks) ?>)</span></h3>
+            <?php if ($this->labelHref): ?>
+            </a>
+            <?php endif ?>
         </div>
     </div>
     <?= $this->bar ?>

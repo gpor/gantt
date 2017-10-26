@@ -8,7 +8,15 @@
             <img src="<?= $this->icon ?>" />
         </div>
         <div class="col-text">
-            <h3><?= $this->label ?> <span class="tasks-text">(<?= $this->bar->tasks ?> <?= str_plural('Task', $this->bar->tasks) ?>)</span></h3>
+            <h3>
+                <?php if ($this->labelHref): ?>
+                <a href="<?= $this->labelHref ?>">
+                <?php endif ?>
+                    <?= $this->label ?> <span class="tasks-text">(<?= $this->bar->tasks ?> <?= str_plural('Task', $this->bar->tasks) ?>)</span>
+                <?php if ($this->labelHref): ?>
+                </a>
+                <?php endif ?>
+            </h3>
         </div>
     </div>
     <?= $this->bar ?>

@@ -7,6 +7,7 @@ class Row extends GporBase
 {
 
     public $rowLabel;
+    public $labelHref;
     public $barText;
     public $cssClasses = [];
 

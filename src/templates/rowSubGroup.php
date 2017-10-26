@@ -5,7 +5,13 @@
             <div class="col-expand-hide-clickable"></div>
             <div class="col-graphic"></div>
             <div class="col-text">
-                <h3><?= $this->label ?></span></h3>
+                <?php if ($this->labelHref): ?>
+                <a href="<?= $this->labelHref ?>">
+                <?php endif ?>
+                    <h3><?= $this->label ?></span></h3>
+                <?php if ($this->labelHref): ?>
+                </a>
+                <?php endif ?>
             </div>
         </div>
         <?= $this->bar ?>
