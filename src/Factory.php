@@ -46,6 +46,12 @@ class Factory
             $rowGroup->rowSubGroups[] = $rowSubGroup;
         }
         $rowGroup->bar          = self::newBar($rowGroup, $gantt);
+        if (isset($data['start'])) {
+            $rowGroup->bar->start_date = $data['start'];
+        }
+        if (isset($data['end'])) {
+            $rowGroup->bar->end_date = $data['end'];
+        }
         $rowGroup->calculateTotals();
         return $rowGroup;
     }
@@ -75,6 +81,12 @@ class Factory
         $noBar                  = self::newBar(null, $rowGroup->gantt);
         $noBar->showBar         = false;
         $rowSubGroup->bar       = $noBar;
+        if (isset($data['start'])) {
+            $rowSubGroup->bar->start_date = $data['start'];
+        }
+        if (isset($data['end'])) {
+            $rowSubGroup->bar->end_date = $data['end'];
+        }
         $rowSubGroup->calculateTotals();
         return $rowSubGroup;
     }
