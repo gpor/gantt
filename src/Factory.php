@@ -100,7 +100,9 @@ class Factory
         if (isset($data['labelHref'])) $row->labelHref = $data['labelHref'];
         $row->cssClasses    = explode(' ', $data['cssClass']);
         $row->bar           = self::newBar($row, $gantt);
-        $row->bar->tasks    = $data['tasks'];
+        if (isset($data['tasks'])) {
+            $row->bar->tasks    = $data['tasks'];
+        }
         $row->bar->setPointsFromDates($data['start'], $data['end']);
         return $row;
     }

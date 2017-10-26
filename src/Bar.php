@@ -44,9 +44,9 @@ class Bar extends GporBase
     public $showBar = true;
 
     /**
-     * @var int
+     * @var int|NULL
      */
-    public $tasks = 0;
+    public $tasks = null;
 
     public function defaultTemplate()
     {
@@ -112,7 +112,9 @@ class Bar extends GporBase
         }
         foreach ($barContainers as $barContainer) {
             $childBar = $barContainer->bar;
-            $this->tasks += $childBar->tasks;
+            if ($childBar->tasks !== null) {
+                $this->tasks += $childBar->tasks;
+            }
             if ( ! $start_date_preset) {
                 if ($this->start_date === null || $childBar->start_date < $this->start_date) {
                     $this->start_date = $childBar->start_date;

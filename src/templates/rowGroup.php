@@ -12,7 +12,10 @@
                 <?php if ($this->labelHref): ?>
                 <a href="<?= $this->labelHref ?>">
                 <?php endif ?>
-                    <?= $this->label ?> <span class="tasks-text">(<?= $this->bar->tasks ?> <?= str_plural('Task', $this->bar->tasks) ?>)</span>
+                    <?= $this->label ?>
+                    <?php if ($this->bar->tasks !== null): ?>
+                    <span class="tasks-text">(<?= $this->bar->tasks ?> <?= str_plural('Task', $this->bar->tasks) ?>)</span>
+                    <?php endif ?>
                 <?php if ($this->labelHref): ?>
                 </a>
                 <?php endif ?>
