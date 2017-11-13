@@ -23,7 +23,7 @@ class Column extends GporBase
 
     /**
      * returns inline css style. This column instance will be the startColumn
-     * @param GanttColumn $endColumn
+     * @param Column $endColumn
      * @return string
      */
     public function barDimensions(Column $endColumn)

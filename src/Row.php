@@ -6,7 +6,12 @@ namespace Gpor\Gantt;
 class Row extends GporBase
 {
 
-    public $rowLabel;
+    public $rowLabelText;
+
+    /**
+     * @var \Gpor\Gantt\RowLabel
+     */
+    public $rowLabelElement;
     public $labelHref;
     public $barText;
     public $cssClasses = [];

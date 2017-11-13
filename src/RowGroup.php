@@ -28,7 +28,7 @@ class RowGroup extends GporBase
 
     /**
      * UP ref
-     * @var \Gpor\Gantt\
+     * @var \Gpor\Gantt\Gantt
      */
     public $gantt;
 

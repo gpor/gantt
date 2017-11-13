@@ -6,9 +6,11 @@ namespace Gpor\Gantt;
 class Factory
 {
 
-    public static function newGantt($columnGroupsData, $row_groups_data)
+    public static function newGantt($columnGroupsData, $row_groups_data, $isMobile = false)
     {
         $gantt = new Gantt;
+        $gantt->isMobile = $isMobile;
+        $gantt->columnsHeader = self::newColumnsHeader($gantt);
         foreach ($columnGroupsData as $columnGroupData) {
             $colGroup = self::newColumnGroup($columnGroupData, $gantt);
             $gantt->columnGroups[] = $colGroup;
@@ -20,6 +22,27 @@ class Factory
             $rowGroup->i = count($gantt->rowGroups) - 1;
         }
         return $gantt;
+    }
+
+    public static function newColumnsHeader(Gantt $gantt)
+    {
+        $columnsHeader = new ColumnsHeader();
+        $columnsHeader->gantt = $gantt;
+        return $columnsHeader;
+    }
+
+    public static function newRowLabel(Row $row)
+    {
+        $rowLabel = new RowLabel();
+        $rowLabel->row = $row;
+        return $rowLabel;
+    }
+
+    public static function newMobileInfo(RowSubGroup $subGroup)
+    {
+        $mobileInfo = new MobileInfo();
+        $mobileInfo->subGroup = $subGroup;
+        return $mobileInfo;
     }
 
     public static function newColumnGroup($data, Gantt $gantt)
@@ -88,6 +111,7 @@ class Factory
             $rowSubGroup->bar->end_date = $data['end'];
         }
         $rowSubGroup->calculateTotals();
+        $rowSubGroup->mobileInfo = self::newMobileInfo($rowSubGroup);
         return $rowSubGroup;
     }
 
@@ -96,7 +120,7 @@ class Factory
         $gantt = $rowSubGroup->rowGroup->gantt;
         $row = new Row;
         $row->subGroup      = $rowSubGroup;
-        $row->rowLabel      = $data['rowLabel'];
+        $row->rowLabelText  = $data['rowLabel'];
         if (isset($data['labelHref'])) $row->labelHref = $data['labelHref'];
         $row->cssClasses    = explode(' ', $data['cssClass']);
         $row->bar           = self::newBar($row, $gantt);
@@ -104,6 +128,7 @@ class Factory
             $row->bar->tasks    = $data['tasks'];
         }
         $row->bar->setPointsFromDates($data['start'], $data['end']);
+        $row->rowLabelElement = self::newRowLabel($row);
         return $row;
     }
 

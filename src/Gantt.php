@@ -27,6 +27,11 @@ class Gantt extends GporBase
     public $columnGroups = [];
 
     /**
+     * @var \Gpor\Gantt\ColumnsHeader
+     */
+    public $columnsHeader;
+
+    /**
      * percentage
      * @var float
      */
@@ -37,9 +42,14 @@ class Gantt extends GporBase
      */
     public $rowGroups = [];
 
+    /**
+     * @var bool
+     */
+    public $isMobile = false;
+
     public function defaultTemplate()
     {
-        return 'gantt';
+        return ($this->isMobile)? 'mobile-gantt' : 'gantt';
     }
 
     /**

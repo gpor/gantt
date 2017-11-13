@@ -38,6 +38,11 @@ class RowSubGroup extends GporBase
      */
     public $bar;
 
+    /**
+     * @var \Gpor\Gantt\MobileInfo
+     */
+    public $mobileInfo;
+
     public function defaultTemplate()
     {
         return 'rowSubGroup';
