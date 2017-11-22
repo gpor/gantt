@@ -5,6 +5,10 @@ namespace Gpor\Gantt;
 
 class Gantt extends GporBase
 {
+    /**
+     * @var array
+     */
+    public $config = [];
 
     /**
      * @var \Gpor\Gantt\Column[$dayIso]
@@ -49,7 +53,7 @@ class Gantt extends GporBase
 
     public function defaultTemplate()
     {
-        return ($this->isMobile)? 'mobile-gantt' : 'gantt';
+        return ($this->config['isMobile'])? 'mobile-gantt' : 'gantt';
     }
 
     /**

@@ -6,10 +6,14 @@ namespace Gpor\Gantt;
 class Factory
 {
 
-    public static function newGantt($columnGroupsData, $row_groups_data, $isMobile = false)
+    public static function newGantt($columnGroupsData, $row_groups_data, $config = [])
     {
+        $config = array_merge([
+            'isMobile'      => false,
+            'labelCol'      => 'Project Name',
+        ], $config);
         $gantt = new Gantt;
-        $gantt->isMobile = $isMobile;
+        $gantt->config = $config;
         $gantt->columnsHeader = self::newColumnsHeader($gantt);
         foreach ($columnGroupsData as $columnGroupData) {
             $colGroup = self::newColumnGroup($columnGroupData, $gantt);

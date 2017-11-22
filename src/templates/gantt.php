@@ -5,7 +5,7 @@
             <div class="col-expand-hide-clickable"></div>
             <div class="col-graphic">
             </div>
-            <div class="col-text">PROJECT NAME</div>
+            <div class="col-text"><?= $this->config['labelCol'] ?></div>
         </div>
         <?= $this->columnsHeader ?>
     </div>

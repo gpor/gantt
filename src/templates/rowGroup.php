@@ -1,7 +1,7 @@
 <?php /* @var $this \Gpor\Gantt\RowGroup */ ?>
 <div class="gg-row-outer gg-pink gg-group-head" data-groupindex="<?= $this->i ?>">
     <div class="gg-row-label">
-        <?php if ( ! $this->gantt->isMobile): ?>
+        <?php if ( ! $this->gantt->config['isMobile']): ?>
             <div class="col-expand-hide-clickable desktop-version">
                 <span class="fa fa-plus" data-closedstate="fa-plus" data-openstate="fa-minus"></span>
             </div>
@@ -23,13 +23,13 @@
                 <?php endif ?>
             </h3>
         </div>
-        <?php if ($this->gantt->isMobile): ?>
+        <?php if ($this->gantt->config['isMobile']): ?>
             <div class="col-expand-hide-clickable">
                 <span class="fa fa-angle-down" data-closedstate="fa-angle-down" data-openstate="fa-angle-up"></span>
             </div>
         <?php endif ?>
     </div>
-    <?php if ( ! $this->gantt->isMobile) echo $this->bar ?>
+    <?php if ( ! $this->gantt->config['isMobile']) echo $this->bar ?>
 </div>
 <div class="gg-group-rows" id="gg-group-rows-<?= $this->i ?>">
     <div class="gg-group-rows-inner">
@@ -39,7 +39,7 @@
         <?php foreach($this->rowSubGroups as $subGroup): ?>
             <?= $subGroup ?>
         <?php endforeach ?>
-        <?php if ($this->gantt->isMobile): ?>
+        <?php if ($this->gantt->config['isMobile']): ?>
         <div class="gg-mobile-info">
             <?php foreach($this->rowSubGroups as $subGroup): ?>
                 <?php if (true): ?>
