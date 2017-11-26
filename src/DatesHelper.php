@@ -11,6 +11,52 @@ class DatesHelper
     public $_dayIntStartDate;
     
     const SECONDS_IN_DAY = 86400;
+    const FIRST_DAY_OF_WEEK = '1';
+
+    public static function ganttColGroups($startIsoDate, $endIsoDate)
+    {
+        $begin = new DateTime($startIsoDate);
+        $end_left = (new DateTime($endIsoDate));
+        if ((int)($end_left->diff($begin))->format('%a') > 56) {
+            $format_test = 'd';
+            $first_day_num = '01';
+            $label_format = 'F';
+            $end = $end_left->modify( '+1 month' );
+        } else {
+            $format_test = 'w';
+            $first_day_num = self::FIRST_DAY_OF_WEEK;
+            $label_format = 'd/m';
+            $end = $end_left->modify( '+1 day' );
+        }
+
+        $interval = new DateInterval('P1D');
+        $daterange = new DatePeriod($begin, $interval ,$end);
+
+        $groups = [];
+        $group = null;
+
+        foreach($daterange as $date){
+            if (date($format_test, $date->getTimestamp()) === $first_day_num) {
+                if ($format_test === 'w' && isset($previous_date, $group)) $group['label'] .= ' - '.$previous_date;
+                if ($group !== null) $groups[] = $group;
+                $group = self::ganttColGroup($date->format($label_format));
+            } elseif ($group === null) {
+                $group = self::ganttColGroup($date->format($label_format));
+            } else {
+            }
+            $previous_date = $date->format($label_format);
+            $group['days'][] = $date->format("Y-m-d");
+        }
+        return $groups;
+    }
+
+    private static function ganttColGroup($label)
+    {
+        return [
+            'label' => $label,
+            'days' => [],
+        ];
+    }
 
     public function output()
     {
