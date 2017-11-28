@@ -16,11 +16,12 @@ class DatesHelper
 
     public static function ganttColGroups($startDate, $endDate = null)
     {
+        if ( ! $startDate) $startDate = time();
         $startIsoDate = self::isoDate($startDate);
-        if ($endDate !== null) $endIsoDate = self::isoDate($endDate);
+        if ($endDate) $endIsoDate = self::isoDate($endDate);
         $begin = new \DateTime($startIsoDate);
-        if ($endDate !== null) $end_left = new \DateTime($endIsoDate);
-        if ($endDate === null || $end_left->getTimestamp() < $begin->getTimestamp()) {
+        if ($endDate) $end_left = new \DateTime($endIsoDate);
+        if ( ! $endDate || $end_left->getTimestamp() < $begin->getTimestamp()) {
             $end_left = new \DateTime(date('Y-m-d', strtotime($startIsoDate) + (self::DEFAULT_NUM_OF_WEEKS * 604800)));
         }
         if ((int)($end_left->diff($begin))->format('%a') > 56) {
