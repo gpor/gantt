@@ -15,8 +15,8 @@ class DatesHelper
 
     public static function ganttColGroups($startIsoDate, $endIsoDate)
     {
-        $begin = new DateTime($startIsoDate);
-        $end_left = (new DateTime($endIsoDate));
+        $begin = new \DateTime($startIsoDate);
+        $end_left = (new \DateTime($endIsoDate));
         if ((int)($end_left->diff($begin))->format('%a') > 56) {
             $format_test = 'd';
             $first_day_num = '01';
@@ -29,8 +29,8 @@ class DatesHelper
             $end = $end_left->modify( '+1 day' );
         }
 
-        $interval = new DateInterval('P1D');
-        $daterange = new DatePeriod($begin, $interval ,$end);
+        $interval = new \DateInterval('P1D');
+        $daterange = new \DatePeriod($begin, $interval ,$end);
 
         $groups = [];
         $group = null;
