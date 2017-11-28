@@ -12,11 +12,17 @@ class DatesHelper
     
     const SECONDS_IN_DAY = 86400;
     const FIRST_DAY_OF_WEEK = '1';
+    const DEFAULT_NUM_OF_WEEKS = 8;
 
-    public static function ganttColGroups($startIsoDate, $endIsoDate)
+    public static function ganttColGroups($startDate, $endDate = null)
     {
+        $startIsoDate = self::isoDate($startDate);
+        if ($endDate !== null) $endIsoDate = self::isoDate($endDate);
         $begin = new \DateTime($startIsoDate);
-        $end_left = (new \DateTime($endIsoDate));
+        if ($endDate !== null) $end_left = new \DateTime($endIsoDate);
+        if ($endDate === null || $end_left->getTimestamp() < $begin->getTimestamp()) {
+            $end_left = new \DateTime(date('Y-m-d', strtotime($startIsoDate) + (self::DEFAULT_NUM_OF_WEEKS * 604800)));
+        }
         if ((int)($end_left->diff($begin))->format('%a') > 56) {
             $format_test = 'd';
             $first_day_num = '01';
@@ -48,6 +54,18 @@ class DatesHelper
             $group['days'][] = $date->format("Y-m-d");
         }
         return $groups;
+    }
+
+    private static function isoDate($date)
+    {
+        if (strpos($date, '/') !== false) {
+            $split = explode('/', $date);
+            return $split[2] . '-' . $split[1] . '-' . $split[0];
+        } elseif (strpos($date, '-') !== false) {
+            return $date;
+        } else {
+            return date('Y-m-d', $date);
+        }
     }
 
     private static function ganttColGroup($label)
