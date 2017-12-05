@@ -7,6 +7,7 @@ class Column extends GporBase
 {
 
     public $name = '';
+    public $iso;
     public $timestamp;
 
     /**

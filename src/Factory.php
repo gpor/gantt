@@ -139,6 +139,7 @@ class Factory
     private static function newColumn($iso)
     {
         $col = new Column;
+        $col->iso = $iso;
         $col->timestamp = strtotime($iso);
         return $col;
     }

@@ -71,10 +71,19 @@ class Bar extends GporBase
         $columns = $this->gantt->columns;
         $start = $this->start_date;
         $end = $this->end_date;
-        if (( ! $start && ! $end) || ( ! isset($columns[$start]) && ! isset($columns[$end]))) {
+        if ( ! $start && ! $end) {
             $this->showBar = false;
             return false;
         }
+        if ($end < $this->gantt->firstCol->iso) {
+            $this->showBar = false;
+            return false;
+        }
+        if ($start > $this->gantt->lastCol->iso) {
+            $this->showBar = false;
+            return false;
+        }
+
         if (isset($columns[$start])) {
             $this->startColumn = $columns[$start];
         } else {
