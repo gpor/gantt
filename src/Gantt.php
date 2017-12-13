@@ -51,6 +51,11 @@ class Gantt extends GporBase
      */
     public $isMobile = false;
 
+    /**
+     * @var null|callable func($bar)
+     */
+    public $barTextFunction;
+
     public function defaultTemplate()
     {
         return ($this->config['isMobile'])? 'mobile-gantt' : 'gantt';

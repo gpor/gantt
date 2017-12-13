@@ -9,7 +9,6 @@ class Bar extends GporBase
      * @var \Gpor\Gantt\Gantt
      */
     public $gantt;
-    public $text;
     public $cssClasses = [];
 
     public $truncated_left = false;
@@ -98,8 +97,16 @@ class Bar extends GporBase
             $this->cssClasses[] = 'truncated-right';
             $this->truncated_right = true;
         }
-        $this->text = DatesHelper::rangeLabel(strtotime($start), strtotime($end));
         return true;
+    }
+
+    public function text()
+    {
+        if ($this->gantt->barTextFunction === null) {
+            return DatesHelper::rangeLabel(strtotime($this->start_date), strtotime($this->end_date));
+        } else {
+            return call_user_func_array($this->gantt->barTextFunction, [$this]);
+        }
     }
 
     /**

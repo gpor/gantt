@@ -145,12 +145,16 @@ class DatesHelper
     {
         $firstDayDay           = date('j', $firstDateUnix);
         $firstDayMonth         = date('M', $firstDateUnix);
+        $firstDayYear          = date('Y', $firstDateUnix);
         $lastDayDay            = date('j', $lastDayUnix);
         $lastDayMonth          = date('M', $lastDayUnix);
-        if ($firstDayMonth === $lastDayMonth) {
-            return "$firstDayDay - $lastDayDay $lastDayMonth";
-        } else {
-            return "$firstDayDay $firstDayMonth - $lastDayDay $lastDayMonth";
+        $lastDayYear           = date('Y', $lastDayUnix);
+        $firstDay = $firstDayDay;
+        if ($firstDayYear !== $lastDayYear) {
+            $firstDay .= " $firstDayMonth, $firstDayYear";
+        } elseif ($firstDayMonth !== $lastDayMonth) {
+            $firstDay .= ' ' . $firstDayMonth;
         }
+        return "$firstDay - $lastDayDay $lastDayMonth, $lastDayYear";
     }
 }

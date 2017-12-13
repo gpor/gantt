@@ -4,7 +4,7 @@
         <?php if ($this->showBar): ?>
         <div class="gg-bar" style="<?= $this->style() ?>">
             <div class="gg-bar-color <?= $this->cssClass() ?>">
-                <p><?= $this->text ?></p>
+                <p><?= $this->text() ?></p>
             </div>
         </div>
         <?php endif ?>
