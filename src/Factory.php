@@ -114,6 +114,9 @@ class Factory
         if (isset($data['end'])) {
             $rowSubGroup->bar->end_date = $data['end'];
         }
+        if (isset($data['showBar'])) {
+            $rowSubGroup->bar->showBar = $data['showBar'];
+        }
         $rowSubGroup->calculateTotals();
         $rowSubGroup->mobileInfo = self::newMobileInfo($rowSubGroup);
         return $rowSubGroup;
