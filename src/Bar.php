@@ -116,27 +116,19 @@ class Bar extends GporBase
      */
     public function setPointsFromChildBars($barContainers)
     {
-        if ($this->start_date !== null) {
-            $start_date_preset = true;
-        } else {
-            $start_date_preset = false;
-        }
-        if ($this->end_date !== null) {
-            $end_date_preset = true;
-        } else {
-            $end_date_preset = false;
-        }
+        $start_date_manually_set = ( !! $this->start_date);
+        $end_date_manually_set = ( !! $this->end_date);
         foreach ($barContainers as $barContainer) {
             $childBar = $barContainer->bar;
             if ($childBar->tasks !== null) {
                 $this->tasks += $childBar->tasks;
             }
-            if ( ! $start_date_preset) {
+            if ( ! $start_date_manually_set) {
                 if ($this->start_date === null || $childBar->start_date < $this->start_date) {
                     $this->start_date = $childBar->start_date;
                 }
             }
-            if ( ! $end_date_preset) {
+            if ( ! $end_date_manually_set) {
                 if ($this->end_date === null || $childBar->end_date > $this->end_date) {
                     $this->end_date = $childBar->end_date;
                 }
