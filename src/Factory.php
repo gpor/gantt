@@ -61,7 +61,7 @@ class Factory
         return $colGroup;
     }
 
-    private static function newRowGroup($data, Gantt $gantt)
+    protected static function newRowGroup($data, Gantt $gantt)
     {
         $rowGroup = new RowGroup;
         $rowGroup->gantt    = $gantt;
@@ -88,14 +88,14 @@ class Factory
      * @param \Gpor\Gantt\Gantt $gantt
      * @return Bar
      */
-    private static function newBar($row_or_group, Gantt $gantt)
+    protected static function newBar($row_or_group, Gantt $gantt)
     {
         $bar = new Bar;
         $bar->gantt = $gantt;
         return $bar;
     }
 
-    private static function newRowSubGroup($data, RowGroup $rowGroup)
+    protected static function newRowSubGroup($data, RowGroup $rowGroup)
     {
         $rowSubGroup            = new RowSubGroup;
         $rowSubGroup->rowGroup  = $rowGroup;
@@ -119,7 +119,7 @@ class Factory
         return $rowSubGroup;
     }
 
-    private static function newRow($data, RowSubGroup $rowSubGroup)
+    protected static function newRow($data, RowSubGroup $rowSubGroup)
     {
         $gantt = $rowSubGroup->rowGroup->gantt;
         $row = new Row;
@@ -136,7 +136,7 @@ class Factory
         return $row;
     }
 
-    private static function newColumn($iso)
+    protected static function newColumn($iso)
     {
         $col = new Column;
         $col->iso = $iso;
