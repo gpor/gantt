@@ -32,7 +32,7 @@ class DatesHelper
         } else {
             $format_test = 'w';
             $first_day_num = self::FIRST_DAY_OF_WEEK;
-            $label_format = 'd/m';
+            $label_format = 'rangeLabel';
             $end = $end_left->modify( '+1 day' );
         }
 
@@ -44,15 +44,30 @@ class DatesHelper
 
         foreach($daterange as $date){
             if (date($format_test, $date->getTimestamp()) === $first_day_num) {
-                if ($format_test === 'w' && isset($previous_date, $group)) $group['label'] .= ' - '.$previous_date;
-                if ($group !== null) $groups[] = $group;
-                $group = self::ganttColGroup($date->format($label_format));
+                if ($format_test === 'w' && isset($previous_date_unix, $group)) {
+                    $group['lastDateUnix'] = $previous_date_unix;
+                }
+                if ($group !== null) {
+                    $groups[] = $group;
+                }
+                $group = ['firstDateUnix' => $date->getTimeStamp(), 'days' => []];
             } elseif ($group === null) {
-                $group = self::ganttColGroup($date->format($label_format));
+                $group = ['firstDateUnix' => $date->getTimeStamp(), 'days' => []];
             } else {
             }
-            $previous_date = $date->format($label_format);
+            $previous_date_unix = $date->getTimeStamp();
             $group['days'][] = $date->format("Y-m-d");
+        }
+        foreach ($groups as $i => $group) {
+            switch($format_test) {
+                case 'w':
+                    $group['label'] = self::rangeLabel($group['firstDateUnix'], $group['lastDateUnix']);
+                    break;
+                case 'd':
+                    $group['label'] = date($label_format, $group['firstDateUnix']);
+                    break;
+            }
+            $groups[$i] = $group;
         }
         return $groups;
     }
@@ -67,14 +82,6 @@ class DatesHelper
         } else {
             return date('Y-m-d', $date);
         }
-    }
-
-    private static function ganttColGroup($label)
-    {
-        return [
-            'label' => $label,
-            'days' => [],
-        ];
     }
 
     public function output()
