@@ -7,7 +7,7 @@
             </div>
         <?php endif ?>
         <div class="col-graphic">
-            <img src="<?= $this->icon ?>" onerror=“this.style.display=‘none’;“ />
+            <img src="<?= $this->icon ?>" onerror="this.style.display='none';" />
         </div>
         <div class="col-text">
             <h3>
