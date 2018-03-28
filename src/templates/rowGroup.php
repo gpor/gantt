@@ -7,7 +7,7 @@
             </div>
         <?php endif ?>
         <div class="col-graphic">
-            <img src="<?= $this->icon ?>" />
+            <img src="<?= $this->icon ?>" onerror="this.style.display='none';" />
         </div>
         <div class="col-text">
             <h3>
@@ -29,7 +29,7 @@
             </div>
         <?php endif ?>
     </div>
-    <?php if ( ! $this->gantt->config['isMobile']) echo $this->bar ?>
+    <?php if ( ! $this->gantt->config['isMobile']) echo $this->barsGrid() ?>
 </div>
 <div class="gg-group-rows" id="gg-group-rows-<?= $this->i ?>">
     <div class="gg-group-rows-inner">

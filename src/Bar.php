@@ -119,18 +119,22 @@ class Bar extends GporBase
         $start_date_manually_set = ( !! $this->start_date);
         $end_date_manually_set = ( !! $this->end_date);
         foreach ($barContainers as $barContainer) {
-            $childBar = $barContainer->bar;
-            if ($childBar->tasks !== null) {
-                $this->tasks += $childBar->tasks;
-            }
-            if ( ! $start_date_manually_set) {
-                if ($this->start_date === null || $childBar->start_date < $this->start_date) {
-                    $this->start_date = $childBar->start_date;
+            $childBars = (property_exists($barContainer, 'bars'))
+                ? $barContainer->bars
+                : [$barContainer->bar];
+            foreach ($childBars as $childBar) {
+                if ($childBar->tasks !== null) {
+                    $this->tasks += $childBar->tasks;
                 }
-            }
-            if ( ! $end_date_manually_set) {
-                if ($this->end_date === null || $childBar->end_date > $this->end_date) {
-                    $this->end_date = $childBar->end_date;
+                if ( ! $start_date_manually_set) {
+                    if ($this->start_date === null || $childBar->start_date < $this->start_date) {
+                        $this->start_date = $childBar->start_date;
+                    }
+                }
+                if ( ! $end_date_manually_set) {
+                    if ($this->end_date === null || $childBar->end_date > $this->end_date) {
+                        $this->end_date = $childBar->end_date;
+                    }
                 }
             }
         }

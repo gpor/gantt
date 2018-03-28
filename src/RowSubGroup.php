@@ -55,4 +55,16 @@ class RowSubGroup extends GporBase
     {
         $this->bar->setPointsFromChildBars($this->rows);
     }
+
+    /**
+     * @return BarsGrid
+     */
+    public function barsGrid()
+    {
+        if ($this->_barsGrid === null) {
+            $this->_barsGrid = new BarsGrid($this, $this->rowGroup->gantt);
+        }
+        return $this->_barsGrid;
+    }
+    private $_barsGrid;
 }

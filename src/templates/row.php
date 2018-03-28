@@ -3,5 +3,5 @@
     <?php if ( ! $this->subGroup->rowGroup->gantt->config['isMobile']): ?>
         <?= $this->rowLabelElement ?>
     <?php endif ?>
-    <?= $this->bar ?>
+    <?= $this->barsGrid() ?>
 </div>

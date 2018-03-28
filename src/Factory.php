@@ -130,11 +130,26 @@ class Factory
         $row->rowLabelText  = $data['rowLabel'];
         if (isset($data['labelHref'])) $row->labelHref = $data['labelHref'];
         $row->cssClasses    = explode(' ', $data['cssClass']);
-        $row->bar           = self::newBar($row, $gantt);
-        if (isset($data['tasks'])) {
-            $row->bar->tasks    = $data['tasks'];
+        $bars_data = (isset($data['bars']))
+            ? $data['bars']
+            : [
+                [
+                    'tasks' => (isset($data['tasks'])? $data['tasks'] : null),
+                    'start' => $data['start'],
+                    'end' => $data['end'],
+                ],
+            ];
+        foreach ($bars_data as $bar_data) {
+            $bar = self::newBar($row, $gantt);
+            if (isset($bar_data['tasks'])) {
+                $bar->tasks = $bar_data['tasks'];
+            }
+            if (isset($bar_data['cssClass'])) {
+                $bar->cssClasses[] = $bar_data['cssClass'];
+            }
+            $bar->setPointsFromDates($bar_data['start'], $bar_data['end']);
+            $row->bars[] = $bar;
         }
-        $row->bar->setPointsFromDates($data['start'], $data['end']);
         $row->rowLabelElement = self::newRowLabel($row);
         return $row;
     }

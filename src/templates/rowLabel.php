@@ -9,8 +9,8 @@
         <a href="<?= $this->row->labelHref ?>">
         <?php endif ?>
             <h3><?= $this->row->rowLabelText ?>
-                <?php if ($this->row->bar->tasks !== null): ?>
-                <span class="tasks-text">(<?= $this->row->bar->tasks ?> <?= str_plural('Task', $this->row->bar->tasks) ?>)</span>
+                <?php if ($this->row->totalTasks() !== false): ?>
+                <span class="tasks-text">(<?= $this->row->totalTasks() ?> <?= str_plural('Task', $this->row->totalTasks()) ?>)</span>
                 <?php endif ?>
             </h3>
         <?php if ($this->row->labelHref): ?>

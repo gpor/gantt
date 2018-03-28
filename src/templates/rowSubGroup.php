@@ -15,7 +15,7 @@
                 <?php endif ?>
             </div>
         </div>
-        <?= $this->bar ?>
+        <?= $this->barsGrid() ?>
     </div>
     <?php endif ?>
     <?php foreach($this->rows as $row): ?>
