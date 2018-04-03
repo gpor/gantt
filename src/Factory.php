@@ -101,6 +101,7 @@ class Factory
         $rowSubGroup->rowGroup  = $rowGroup;
         $rowSubGroup->label     = $data['label'];
         if (isset($data['labelHref'])) $rowSubGroup->labelHref = $data['labelHref'];
+        if (isset($data['headRowCssClass'])) $rowSubGroup->headRowCssClass = $data['headRowCssClass'];
         foreach ($data['rows'] as $row_data) {
             $row = self::newRow($row_data, $rowSubGroup);
             $rowSubGroup->rows[] = $row;

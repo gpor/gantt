@@ -43,6 +43,11 @@ class RowSubGroup extends GporBase
      */
     public $mobileInfo;
 
+    /**
+     * @var string
+     */
+    public $headRowCssClass = '';
+
     public function defaultTemplate()
     {
         return 'rowSubGroup';
