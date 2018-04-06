@@ -31,9 +31,6 @@ class BarsGrid extends GporBase
      */
     public function bars()
     {
-        if ( ! is_object($this->row)) {
-            dd($this);
-        }
         return (property_exists($this->row, 'bars'))
             ? $this->row->bars
             : [$this->row->bar];

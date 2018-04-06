@@ -55,6 +55,19 @@ class Gantt extends GporBase
      * @var null|callable func($bar)
      */
     public $barTextFunction;
+
+    /**
+     * @var null|callable func($bar)
+     */
+    public $barTitleAttrFunction;
+
+    /**
+     * @var null|callable func($bar)
+     */
+    public $barDataTextAttrFunction;
+
+
+
     public $barTitleAttrs = true;
     public $barTextShow = true;
 

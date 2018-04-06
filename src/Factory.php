@@ -72,26 +72,38 @@ class Factory
             $rowSubGroup = self::newRowSubGroup($subgroup_data, $rowGroup);
             $rowGroup->rowSubGroups[] = $rowSubGroup;
         }
-        $rowGroup->bar          = self::newBar($rowGroup, $gantt);
-        if (isset($data['start'])) {
-            $rowGroup->bar->start_date = $data['start'];
-        }
-        if (isset($data['end'])) {
-            $rowGroup->bar->end_date = $data['end'];
-        }
+        $rowGroup->bar          = self::newBar($gantt, $data);
         $rowGroup->calculateTotals();
         return $rowGroup;
     }
 
     /**
-     * @param \Gpor\Gantt\RowGroup|\Gpor\Gantt\Row|NULL $row_or_group
      * @param \Gpor\Gantt\Gantt $gantt
+     * @param array ['start' => ... 'end' => ... ] optional: miscBarData, tasks, cssClass
      * @return Bar
      */
-    protected static function newBar($row_or_group, Gantt $gantt)
+    protected static function newBar(Gantt $gantt, $data)
     {
         $bar = new Bar;
         $bar->gantt = $gantt;
+        if (isset($data['start'])) {
+            $bar->start_date = $data['start'];
+        }
+        if (isset($data['end'])) {
+            $bar->end_date = $data['end'];
+        }
+        if (isset($data['showBar'])) {
+            $bar->showBar = $data['showBar'];
+        }
+        if (isset($data['miscBarData'])) {
+            $bar->miscData = $data['miscBarData'];
+        }
+        if (isset($data['tasks'])) {
+            $bar->tasks = $data['tasks'];
+        }
+        if (isset($data['cssClass'])) {
+            $bar->cssClasses[] = $data['cssClass'];
+        }
         return $bar;
     }
 
@@ -106,18 +118,9 @@ class Factory
             $row = self::newRow($row_data, $rowSubGroup);
             $rowSubGroup->rows[] = $row;
         }
-        $noBar                  = self::newBar(null, $rowGroup->gantt);
+        $noBar                  = self::newBar($rowGroup->gantt, $data);
         $noBar->showBar         = false;
         $rowSubGroup->bar       = $noBar;
-        if (isset($data['start'])) {
-            $rowSubGroup->bar->start_date = $data['start'];
-        }
-        if (isset($data['end'])) {
-            $rowSubGroup->bar->end_date = $data['end'];
-        }
-        if (isset($data['showBar'])) {
-            $rowSubGroup->bar->showBar = $data['showBar'];
-        }
         $rowSubGroup->calculateTotals();
         $rowSubGroup->mobileInfo = self::newMobileInfo($rowSubGroup);
         return $rowSubGroup;
@@ -141,13 +144,7 @@ class Factory
                 ],
             ];
         foreach ($bars_data as $bar_data) {
-            $bar = self::newBar($row, $gantt);
-            if (isset($bar_data['tasks'])) {
-                $bar->tasks = $bar_data['tasks'];
-            }
-            if (isset($bar_data['cssClass'])) {
-                $bar->cssClasses[] = $bar_data['cssClass'];
-            }
+            $bar = self::newBar($gantt, $bar_data);
             $bar->setPointsFromDates($bar_data['start'], $bar_data['end']);
             $row->bars[] = $bar;
         }

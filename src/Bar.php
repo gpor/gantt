@@ -47,6 +47,11 @@ class Bar extends GporBase
      */
     public $tasks = null;
 
+    /**
+     * @var array key=>val useful for Gantt lambda functions barTextFunction($bar), barTitleAttrFunction($bar), barDataTextAttrFunction($bar)
+     */
+    public $miscData = [];
+
     public function defaultTemplate()
     {
         return 'bar';
@@ -102,10 +107,29 @@ class Bar extends GporBase
 
     public function text()
     {
-        if ($this->gantt->barTextFunction === null) {
-            return DatesHelper::rangeLabel(strtotime($this->start_date), strtotime($this->end_date));
+        if (is_callable($this->gantt->barTextFunction)) {
+            $text = call_user_func_array($this->gantt->barTextFunction, [$this]);
+        }
+        return (isset($text))
+            ? $text
+            : DatesHelper::rangeLabel(strtotime($this->start_date), strtotime($this->end_date));
+    }
+
+    public function titleAttr()
+    {
+        if (is_callable($this->gantt->barTitleAttrFunction)) {
+            return call_user_func_array($this->gantt->barTitleAttrFunction, [$this]);
         } else {
-            return call_user_func_array($this->gantt->barTextFunction, [$this]);
+            return $this->text();
+        }
+    }
+
+    public function dataTextAttr()
+    {
+        if (is_callable($this->gantt->barDataTextAttrFunction)) {
+            return call_user_func_array($this->gantt->barDataTextAttrFunction, [$this]);
+        } else {
+            return $this->titleAttr();
         }
     }
 
